@@ -2,6 +2,7 @@ package model;
 
 import control.GameController;
 
+
 public class GameModel {
 	PlayersCatalogue  playerCatalogue;
 	String [] gamePlayers;		

@@ -4,8 +4,8 @@ import control.GameController;
 
 
 public class GameModel {
-	PlayersCatalogue  playerCatalogue;
-	String [] gamePlayers;		
+	PlayerRoster  playerCatalogue;
+	String [] gamePlayers;
 	String[][] gameBoard;
 	GameController gc;
 	Boolean mover;
@@ -14,7 +14,7 @@ public class GameModel {
 		this.gc=gc;
 		gamePlayers = new String[2];
 		gameBoard= null;
-		playerCatalogue= new PlayersCatalogue();
+		playerCatalogue= new PlayerRoster();
 		mover=false;
 	}
 	
@@ -79,11 +79,11 @@ public class GameModel {
 		this.gameBoard = gameBoard;
 	}
 
-	public PlayersCatalogue getPlayerCatalogue() {
+	public PlayerRoster getPlayerCatalogue() {
 		return playerCatalogue;
 	}
 
-	public void setPlayerCatalogue(PlayersCatalogue playerCatalogue) {
+	public void setPlayerCatalogue(PlayerRoster playerCatalogue) {
 		this.playerCatalogue = playerCatalogue;
 	}
 	

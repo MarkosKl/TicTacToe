@@ -22,6 +22,7 @@ import control.GameController;
 
 public class PlayerPanel extends GamePanel{
 	
+	private static final long serialVersionUID = 1L;
 	JButton selectPlayerBtn;
 	int pos;
 	String currentPlayer;

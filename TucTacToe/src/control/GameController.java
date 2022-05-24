@@ -4,7 +4,7 @@ import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 
 import model.GameModel;
-import model.PlayersCatalogue;
+import model.PlayerRoster;
 import view.MainAreaPanel;
 import view.MainWindow;
 

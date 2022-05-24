@@ -11,6 +11,8 @@ import javax.swing.border.LineBorder;
 import control.GameController;
 
 public class TopPanel extends GamePanel{	
+
+	private static final long serialVersionUID = 1L;
 	JButton quitBtn;
 	JButton startGameBtn;
 	JButton doneBtn;

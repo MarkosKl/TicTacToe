@@ -10,7 +10,8 @@ import java.awt.Point;
 import control.GameController;
 
 public class GameBoard extends GamePanel {	
-	
+
+	private static final long serialVersionUID = 1L;
 	private BoardCell[][] cells;
 	
 	public GameBoard(GameController gc) {

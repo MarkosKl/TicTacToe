@@ -6,12 +6,14 @@ import javax.swing.JOptionPane;
 
 import control.GameController;
 
-public class PlayersCatalogue implements Serializable {
+public class PlayerRoster implements Serializable {
+
+	private static final long serialVersionUID = 1L;
 	private String[] players;
 	private GameController gc = new GameController();
 	private int numOfPlayers;
 	
-	public PlayersCatalogue() {
+	public PlayerRoster() {
 		players = new String[15];
 		players[0]="Vasilis";
 		players[1]="Nektarios";

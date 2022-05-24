@@ -1,5 +1,42 @@
 package view;
 
-public class MainAreaPanel {
+import java.awt.CardLayout;
+import java.awt.Color;
+import java.awt.Dimension;
+import javax.swing.JPanel;
+import javax.swing.border.LineBorder;
 
+import control.GameController;
+
+public class MainAreaPanel extends GamePanel{
+	
+	private static final long serialVersionUID = 1L;
+	public static final String HOF = "HALL_OF_FAME";
+	public static final String BOARD = "GAME_BOARD";
+		
+	HallOfFame hallOfFame;
+	JPanel gameBoard;
+	CardLayout cards;
+	
+	public MainAreaPanel(GameController gc) {
+		super(gc);
+		this.cards= new CardLayout();
+		this.setLayout(this.cards);
+		this.setPreferredSize(new Dimension(WIDTH - 2 * MainWindow.PLAYER_WIDTH, MainWindow.HEIGHT - MainWindow.TOP_HEIGHT));
+		this.setBackground(Color.WHITE);
+		this.setBorder(new LineBorder(Color.GRAY,1,true));
+		
+		hallOfFame = new HallOfFame(this.gc);
+		hallOfFame.setBackground(Color.PINK);
+		gameBoard = new GameBoard(this.gc);
+		gameBoard.setBackground(Color.GREEN);
+		this.add(HOF,hallOfFame);
+		this.add(BOARD,gameBoard);		
+	}
+	
+	
+	public void showCard(String s) {		
+		cards.show(this, s);		
+	}
+	
 }

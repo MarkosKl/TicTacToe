@@ -25,8 +25,8 @@ public class HallOfFame extends GamePanel{
 		int x = this.getWidth()/2 - 50;
 		int y = this.getHeight()/25;		
 		g.drawString("Hall Of Fame", x, y);
-		for(int i=0; i<gc.getModel().getPlayerCatalogue().getNumOfPlayers(); i++) {
-			g.drawString(gc.getModel().getPlayerCatalogue().getPlayer(i),xVariable,yVariable+20*i);
+		for(int i=0; i<gc.getModel().getPlayerRoster().getNumOfPlayers(); i++) {
+			g.drawString(gc.getModel().getPlayerRoster().getPlayer(i),xVariable,yVariable+20*i);
 		}
 	}
 

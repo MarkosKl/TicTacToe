@@ -4,7 +4,7 @@ import control.GameController;
 
 
 public class GameModel {
-	PlayerRoster  playerCatalogue;
+	PlayerRoster  playerRoster;
 	String [] gamePlayers;
 	String[][] gameBoard;
 	GameController gc;
@@ -14,7 +14,7 @@ public class GameModel {
 		this.gc=gc;
 		gamePlayers = new String[2];
 		gameBoard= null;
-		playerCatalogue= new PlayerRoster();
+		playerRoster = new PlayerRoster();
 		mover=false;
 	}
 	
@@ -79,12 +79,12 @@ public class GameModel {
 		this.gameBoard = gameBoard;
 	}
 
-	public PlayerRoster getPlayerCatalogue() {
-		return playerCatalogue;
+	public PlayerRoster getPlayerRoster() {
+		return playerRoster;
 	}
 
-	public void setPlayerCatalogue(PlayerRoster playerCatalogue) {
-		this.playerCatalogue = playerCatalogue;
+	public void setPlayerRoster(PlayerRoster playerRoster) {
+		this.playerRoster = playerRoster;
 	}
 	
 	public String getPlayerStats(String player) {
@@ -95,5 +95,71 @@ public class GameModel {
 		sb.append("Lost:").append("\t").append("25%").append("\n");
 		return sb.toString();			
 	}
+	
+	public String checkWinner(String[][] gameBoard) {
+		int i=0;
 		
+		/*check for tie*/
+		
+		for(i=0; i<3; i++) {
+			for(int j=0; j<3; j++) {
+				if(gameBoard[j][i]!=null) {
+					return "TIE";
+				}
+			}
+		}
+		
+		/*check the rows*/
+		for(int j=0; j<3; j++) {
+			if (gameBoard[j][i] == "X" && gameBoard[j][i+1]=="X" && gameBoard[j][i+2]=="X") {
+				return "X wins";
+			}
+		}
+		
+		for(int j=0; j<3; j++) {
+			if (gameBoard[j][i] == "O" && gameBoard[j][i+1]=="O" && gameBoard[j][i+2]=="O") {
+				return "O wins";
+			}
+		}
+		
+		/*check the columns*/
+		
+		for(int j=0; j<3; j++) {
+			if(gameBoard[j][i]=="X" && gameBoard[j+1][i]=="X" && gameBoard[j+2][i]=="X") {
+				return "X wins";
+			}
+		}
+		
+		for(int j=0; j<3; j++) {
+			if(gameBoard[j][i]=="O" && gameBoard[j+1][i]=="O" && gameBoard[j+2][i]=="O") {
+				return "O wins";
+			}
+		}
+		
+		/*check the diagonals*/
+		
+		if(gameBoard[0][0]=="X" && gameBoard[1][1]=="X" && gameBoard[2][2]=="X") {
+			return "X wins";
+		}
+		
+		else if(gameBoard[0][0]=="O" && gameBoard[1][1]=="O" && gameBoard[2][2]=="O") {
+			return "O wins";
+		}
+		
+		else if(gameBoard[0][2]=="X" && gameBoard[1][1]=="X" && gameBoard[2][0]=="X") {
+			return "X wins";
+		}
+		
+		else if(gameBoard[0][2]=="O" && gameBoard[1][1]=="O" && gameBoard[2][0]=="O") {
+			return "O wins";
+		}
+		return "";
+	}
+	
+	public void lastCheck() {
+		String winner = this.checkWinner(this.getGameBoard());
+		if(this.NoPlay() && winner != "") {
+			System.out.println(winner);
+		}
+	}
 }

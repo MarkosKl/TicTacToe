@@ -3,6 +3,8 @@ package control;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 
+import javax.swing.JOptionPane;
+
 import model.GameModel;
 import model.PlayerRoster;
 import view.MainAreaPanel;
@@ -57,4 +59,32 @@ public class GameController extends WindowAdapter {
 		return view;
 	}
 	
+	//Enables the Done button after the game ends
+	public void EnableDone() {
+		String winner = getModel().checkWinner(getModel().getGameBoard());
+		if((getModel().NoPlay() && winner != "")) {
+			view.getTopPanel().getDoneBtn().setEnabled(true);
+		}
+	}
+	
+	//Shows the winner in a new window
+	public void showWinner() {
+		String winner = getModel().checkWinner(getModel().getGameBoard());
+		if(winner == "X wins") {
+			JOptionPane pane = new JOptionPane();
+			JOptionPane.showConfirmDialog(pane, "Game Over. "+ winner + "","Game over.",
+					JOptionPane.OK_CANCEL_OPTION);	
+		}
+		else if(winner == "O wins") {
+			JOptionPane pane1 = new JOptionPane();
+			JOptionPane.showConfirmDialog(pane1, "Game Over. "+ winner + "","Game over.",
+					JOptionPane.OK_CANCEL_OPTION);
+		}
+		
+		if(winner == "TIE") {
+			JOptionPane pane2 = new JOptionPane();
+			JOptionPane.showConfirmDialog(pane2, "Game Over. "+ winner + "","Game over.",
+					JOptionPane.OK_CANCEL_OPTION);
+		}
+	}
 }

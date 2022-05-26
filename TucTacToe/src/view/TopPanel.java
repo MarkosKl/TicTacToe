@@ -16,6 +16,7 @@ public class TopPanel extends GamePanel{
 	JButton quitBtn;
 	JButton startGameBtn;
 	JButton doneBtn;
+	JButton addPlayerBtn;
 	
 	public TopPanel (GameController gc) {
 		super(gc);
@@ -34,12 +35,43 @@ public class TopPanel extends GamePanel{
 		doneBtn = new JButton("Done");		
 		doneBtn.setPreferredSize(new Dimension(100, 40));		
 		doneBtn.setEnabled(false);
-		doneBtn.addActionListener((e)->{System.out.println("done pressed");});
+		doneBtn.addActionListener((e)->{gc.getView().getMainPanel().showCard(MainAreaPanel.HOF);});
+		doneBtn.addActionListener((e)->{this.getDoneBtn().setEnabled(false);});
+		/* So it won't show Player Name and Stats when Done button is pressed */
+		doneBtn.addActionListener((e)->{gc.getView().getLeftPanel().getPlName().setVisible(false);});
+		doneBtn.addActionListener((e)->{gc.getView().getRightPanel().getPlName().setVisible(false);});
+		doneBtn.addActionListener((e)->{gc.getView().getLeftPanel().getPlStats().setVisible(false);});
+		doneBtn.addActionListener((e)->{gc.getView().getRightPanel().getPlStats().setVisible(false);});
+		/*To be able to choose player after Done is pressed */
+		doneBtn.addActionListener((e)->{gc.getView().getLeftPanel().getSelectPlayerBtn().setEnabled(true);});
+		doneBtn.addActionListener((e)->{gc.getView().getRightPanel().getSelectPlayerBtn().setEnabled(true);});
+		doneBtn.addActionListener((e)->{this.getAddPlayerBtn().setEnabled(true);});
+
+		
+		addPlayerBtn = new JButton("Add Player");
+		addPlayerBtn.setPreferredSize(new Dimension(100, 40));		
+		addPlayerBtn.setEnabled(true);
+		addPlayerBtn.addActionListener((e)->{gc.getModel().getPlayerRoster().addPlayer();});//Kaleitai h addPlayer otan paththei
 		
 		add(startGameBtn);
 		add(doneBtn);
-		add(quitBtn);					
+		add(quitBtn);	
+		add(addPlayerBtn);
 	}
+	
+	
+
+	public JButton getAddPlayerBtn() {
+		return addPlayerBtn;
+	}
+
+
+
+	public void setAddPlayerBtn(JButton addPlayerBtn) {
+		this.addPlayerBtn = addPlayerBtn;
+	}
+
+
 
 	public JButton getQuitBtn() {
 		return quitBtn;

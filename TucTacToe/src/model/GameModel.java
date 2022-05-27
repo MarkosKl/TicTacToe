@@ -1,6 +1,12 @@
 package model;
 
+import java.awt.Dimension;
+
 import control.GameController;
+import model.HalO.MoveO;
+import model.HalX.MoveX;
+import model.MrBeanO.MoveRO;
+import model.MrBeanX.MoveRX;
 
 
 public class GameModel {
@@ -9,6 +15,9 @@ public class GameModel {
 	String[][] gameBoard;
 	GameController gc;
 	Boolean mover;
+	int moves;
+	Player players;
+	
 	
 	public GameModel(GameController gc) {
 		this.gc=gc;
@@ -16,6 +25,8 @@ public class GameModel {
 		gameBoard= null;
 		playerRoster = new PlayerRoster();
 		mover=false;
+		moves = 0;
+		players = new Player();
 	}
 	
 	public void checkDimValidity(int row, int col) {
@@ -54,13 +65,18 @@ public class GameModel {
 	public boolean ready() {
 		return (gamePlayers[0] != null && gamePlayers[1] !=null);
 	}
+	
+	public void setMover(Boolean mover) {
+		this.mover = mover;
+	}
 		
 	public void startGame() {
 		gameBoard= new String[3][3];
 	}
 	
 	public boolean inPlay() {
-		return gameBoard !=null;
+		String winner = checkForWinner(gameBoard); 
+		return gameBoard !=null && moves <9 && winner == "";
 	}
 	
 	public boolean NoPlay() {
@@ -87,6 +103,15 @@ public class GameModel {
 		this.playerRoster = playerRoster;
 	}
 	
+	
+	public Player getPlayers() {
+		return players;
+	}
+
+	public void setPlayers(Player players) {
+		this.players = players;
+	}
+
 	public String getPlayerStats(String player) {
 		StringBuilder sb = new StringBuilder("");
 		sb.append(player).append("\n\n\n");
@@ -96,19 +121,16 @@ public class GameModel {
 		return sb.toString();			
 	}
 	
-	public String checkWinner(String[][] gameBoard) {
+	public void makeMoves(int row, int column) {
+		checkMoveValidity(row, column);
+		gameBoard[row][column] = getMoverMark();
+		mover = !mover;
+		moves++;
+	}
+	
+	public String checkForWinner(String[][] gameBoard) {
 		int i=0;
-		
-		/*check for tie*/
-		
-		for(i=0; i<3; i++) {
-			for(int j=0; j<3; j++) {
-				if(gameBoard[j][i]!=null) {
-					return "TIE";
-				}
-			}
-		}
-		
+	
 		/*check the rows*/
 		for(int j=0; j<3; j++) {
 			if (gameBoard[j][i] == "X" && gameBoard[j][i+1]=="X" && gameBoard[j][i+2]=="X") {
@@ -125,13 +147,13 @@ public class GameModel {
 		/*check the columns*/
 		
 		for(int j=0; j<3; j++) {
-			if(gameBoard[j][i]=="X" && gameBoard[j+1][i]=="X" && gameBoard[j+2][i]=="X") {
+			if(gameBoard[i][j]=="X" && gameBoard[i+1][j]=="X" && gameBoard[i+2][j]=="X") {
 				return "X wins";
 			}
 		}
 		
 		for(int j=0; j<3; j++) {
-			if(gameBoard[j][i]=="O" && gameBoard[j+1][i]=="O" && gameBoard[j+2][i]=="O") {
+			if(gameBoard[i][j]=="O" && gameBoard[i+1][j]=="O" && gameBoard[i+2][j]=="O") {
 				return "O wins";
 			}
 		}
@@ -156,10 +178,222 @@ public class GameModel {
 		return "";
 	}
 	
+	public String checkForTie(String[][] gameBoard) {
+		String winner = checkForWinner(gameBoard);
+		
+				if(winner == "" && moves == 9) {
+					return "TIE";
+				
+			
+}
+		return "";
+	}
+	
+	/*Method to print the result*/
 	public void lastCheck() {
-		String winner = this.checkWinner(this.getGameBoard());
+		String winner = this.checkForWinner(this.getGameBoard());
+		String tie = this.checkForTie(this.getGameBoard());
 		if(this.NoPlay() && winner != "") {
 			System.out.println(winner);
 		}
+		if(tie != "") {
+			System.out.println(tie);
+		}
+	}
+	
+	public void emptyBoard(String[][] gameBoard) {
+		moves = 0;
+		for(int i = 0; i < 3; i++) {
+			for(int j = 0; j < 3; j++) {
+				gameBoard[i][j] = "\0";
+			}
+		}
+	}
+	
+	public void reEnableSelectPlayer() {
+		gc.getView().getLeftPanel().getSelectPlayerBtn().setPreferredSize(new Dimension(150,40));
+		gc.getView().getRightPanel().getSelectPlayerBtn().setPreferredSize(new Dimension(150,40));
+	}
+	
+	public void emptyPlayers() {
+		for(int i = 0; i < 2; i++) {
+			gamePlayers[i] = null;
+		}
+	}
+	
+	
+	
+	
+	
+	
+	
+	
+	/*---------------------------------------------THELOUN STROSIMO--------------------------------------------------------------------*/
+	
+	
+	public void BothAiPlaying(){//Elegxoume poia AI paizoun metaju tous kai ta bazoume na kanoune kinhseis mexri na breuei nikhths h isopalia
+		//////////////////////////////Perfect AI VS Bad AI//////////////////////////
+		if((gc.getView().getLeftPanel().getSelectPlayerBtn().equals("Hal") && gc.getView().getRightPanel().getSelectPlayerBtn().equals("MrBean"))){
+			
+			boolean stop = true;
+				while (stop) {
+				if(stop) {
+					
+					MoveX bestMoveAi = new MoveX();
+					bestMoveAi = HalX.findBestMoveX(gameBoard);
+					gameBoard[bestMoveAi.rowX][bestMoveAi.colX] = "X";
+					moves++;
+					mover=!mover;
+					
+					String winner = this.checkForWinner(this.getGameBoard());
+					String tie = this.checkForTie(this.getGameBoard());
+					this.lastCheck();
+					gc.enableDone();
+					gc.showWinner();
+					if(winner != "" || tie != "") {
+						break;
+					}
+					
+					MoveRO randomMoveAi = new MoveRO();
+					randomMoveAi = MrBeanO.generateRandomMoveRO(gameBoard);
+					gameBoard[randomMoveAi.rowRO][randomMoveAi.colRO] = "O";
+					moves++;
+					mover=!mover;
+					
+					
+					this.lastCheck();
+					gc.enableDone();
+					gc.showWinner();
+					String winner1 = this.checkForWinner(this.getGameBoard());
+					String tie1 = this.checkForTie(this.getGameBoard());
+					if(winner1 != "" || tie1 != "") {
+						break;
+					}
+				}
+				
+				}
+				
+		}
+	if((gc.getView().getLeftPanel().getSelectPlayerBtn().equals("MrBean") && gc.getView().getRightPanel().getSelectPlayerBtn().equals("Hal"))) {
+		
+		boolean stop = true;
+		while (stop) {
+			
+		if(stop) {
+			
+			MoveRX randomMoveAi = new MoveRX();
+			randomMoveAi = MrBeanX.generateRandomMoveRX(gameBoard);
+			gameBoard[randomMoveAi.rowRX][randomMoveAi.colRX] = "X";
+			moves++;
+			mover=!mover;
+			
+			String winner = this.checkForWinner(this.getGameBoard());
+			String tie = this.checkForTie(this.getGameBoard());
+			this.lastCheck();
+			gc.enableDone();
+			gc.showWinner();
+			if(winner != "" || tie != "") {
+				break;
+			}
+			
+			MoveO perfectMoveAi = new MoveO();
+			perfectMoveAi = HalO.findBestMoveO(gameBoard);
+			gameBoard[perfectMoveAi.rowO][perfectMoveAi.colO] = "O";
+			moves++;
+			mover=!mover;
+			
+			this.lastCheck();
+			gc.enableDone();
+			gc.showWinner();
+			String winner1 = this.checkForWinner(this.getGameBoard());
+			String tie1 = this.checkForTie(this.getGameBoard());
+			if(winner1 != "" || tie1 != "") {
+				break;
+			}
+		}
+		
+		}
+	}
+	/////////////////////////////////////////Perfect AI VS Perfect AI///////////////////////////
+	if((gc.getView().getLeftPanel().getSelectPlayerBtn().equals("Hal") && gc.getView().getRightPanel().getSelectPlayerBtn().equals("Hal"))) {
+		
+		boolean stop = true;
+		while (stop) {
+			
+		if(stop) {
+			
+			MoveX bestMoveAi = new MoveX();
+			bestMoveAi = HalX.findBestMoveX(gameBoard);
+			gameBoard[bestMoveAi.rowX][bestMoveAi.colX] = "X";
+			moves++;
+			mover=!mover;
+			
+			String winner = this.checkForWinner(this.getGameBoard());
+			String tie = this.checkForTie(this.getGameBoard());
+			this.lastCheck();
+			gc.enableDone();
+			gc.showWinner();
+			if(winner != "" || tie != "") {
+				break;
+			}
+			
+			MoveO perfectMoveAi = new MoveO();
+			perfectMoveAi = HalO.findBestMoveO(gameBoard);
+			gameBoard[perfectMoveAi.rowO][perfectMoveAi.colO] = "O";
+			moves++;
+			mover=!mover;
+			
+			this.lastCheck();
+			gc.enableDone();
+			gc.showWinner();
+			String winner1 = this.checkForWinner(this.getGameBoard());
+			String tie1 = this.checkForTie(this.getGameBoard());
+			if(winner1 != "" || tie1 != "") {
+				break;
+			}
+		}
+		
+		}
+	}
+	/////////////////////////////Bad AI VS Bad AI///////////////////////////////////
+	if((gc.getView().getLeftPanel().getSelectPlayerBtn().equals("MrBean") && gc.getView().getRightPanel().getSelectPlayerBtn().equals("MrBean"))) {
+		
+		boolean stop = true;
+		while (stop) {
+			
+		if(stop) {
+			
+			MoveRX randomMoveAi = new MoveRX();
+			randomMoveAi = MrBeanX.generateRandomMoveRX(gameBoard);
+			gameBoard[randomMoveAi.rowRX][randomMoveAi.colRX] = "X";
+			moves++;
+			mover=!mover;
+			
+			String winner = this.checkForWinner(this.getGameBoard());
+			String tie = this.checkForTie(this.getGameBoard());
+			this.lastCheck();
+			gc.enableDone();
+			gc.showWinner();
+			if(winner != "" || tie != "") {
+				break;
+			}
+			
+			MoveRO randomMoveAi1 = new MoveRO();
+			randomMoveAi1 = MrBeanO.generateRandomMoveRO(gameBoard);
+			gameBoard[randomMoveAi1.rowRO][randomMoveAi1.colRO] = "O";
+			moves++;
+			mover=!mover;
+			
+			this.lastCheck();
+			gc.enableDone();
+			gc.showWinner();
+			String winner1 = this.checkForWinner(this.getGameBoard());
+			String tie1 = this.checkForTie(this.getGameBoard());
+			if(winner1 != "" || tie1 != "") {
+				break;
+			}
+		}
+		}
+	}
 	}
 }

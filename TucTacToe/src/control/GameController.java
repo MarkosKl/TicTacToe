@@ -2,6 +2,10 @@ package control;
 
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.ObjectOutputStream;
 
 import javax.swing.JOptionPane;
 
@@ -31,8 +35,22 @@ public class GameController extends WindowAdapter {
 		this.view.setVisible(true);
 	}
 	
+	/*While quitting, we store our data to a document*/
 	public void quit() {		
-		System.out.println("bye bye...");		
+		System.out.println("bye bye...");
+		try {
+			ObjectOutputStream outputStream = new ObjectOutputStream(new FileOutputStream("tuctactoe.ser"));
+			int counter = this.getModel().getPlayers().countArrayElements(this.getModel().getPlayers())+1;
+			for(int i = 0; i <= counter; i++)
+			outputStream.writeObject(this.getModel().getPlayersInfo(i).getPlayer(i));
+			outputStream.close();
+		} catch (FileNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		System.exit(0);
 	}
 	
@@ -60,16 +78,18 @@ public class GameController extends WindowAdapter {
 	}
 	
 	//Enables the Done button after the game ends
-	public void EnableDone() {
-		String winner = getModel().checkWinner(getModel().getGameBoard());
-		if((getModel().NoPlay() && winner != "")) {
+	public void enableDone() {
+		String winner = getModel().checkForWinner(getModel().getGameBoard());
+		String tie = getModel().checkForTie(getModel().getGameBoard());
+		if((getModel().NoPlay() && winner != "") || (getModel().NoPlay() && tie != "")) {
 			view.getTopPanel().getDoneBtn().setEnabled(true);
 		}
 	}
 	
 	//Shows the winner in a new window
 	public void showWinner() {
-		String winner = getModel().checkWinner(getModel().getGameBoard());
+		String winner = getModel().checkForWinner(getModel().getGameBoard());
+		String tie = getModel().checkForTie(getModel().getGameBoard());
 		if(winner == "X wins") {
 			JOptionPane pane = new JOptionPane();
 			JOptionPane.showConfirmDialog(pane, "Game Over. "+ winner + "","Game over.",
@@ -81,9 +101,9 @@ public class GameController extends WindowAdapter {
 					JOptionPane.OK_CANCEL_OPTION);
 		}
 		
-		if(winner == "TIE") {
+		if(tie == "TIE") {
 			JOptionPane pane2 = new JOptionPane();
-			JOptionPane.showConfirmDialog(pane2, "Game Over. "+ winner + "","Game over.",
+			JOptionPane.showConfirmDialog(pane2, "Game Over. "+ tie + "","Game over.",
 					JOptionPane.OK_CANCEL_OPTION);
 		}
 	}

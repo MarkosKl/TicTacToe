@@ -40,9 +40,9 @@ public class GameController extends WindowAdapter {
 		System.out.println("bye bye...");
 		try {
 			ObjectOutputStream outputStream = new ObjectOutputStream(new FileOutputStream("tuctactoe.ser"));
-			int counter = this.getModel().getPlayers().countArrayElements(this.getModel().getPlayers())+1;
+			int counter = this.getModel().getPlayerRoster().countArrayElements(this.getModel().getPlayerRoster().getPlayers())+1;
 			for(int i = 0; i <= counter; i++)
-			outputStream.writeObject(this.getModel().getPlayersInfo(i).getPlayer(i));
+			outputStream.writeObject(this.getModel().getPlayerRoster().getPlayer(i));
 			outputStream.close();
 		} catch (FileNotFoundException e) {
 			// TODO Auto-generated catch block

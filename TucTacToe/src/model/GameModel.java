@@ -16,7 +16,6 @@ public class GameModel {
 	GameController gc;
 	Boolean mover;
 	int moves;
-	Player players;
 	
 	
 	public GameModel(GameController gc) {
@@ -26,7 +25,6 @@ public class GameModel {
 		playerRoster = new PlayerRoster();
 		mover=false;
 		moves = 0;
-		players = new Player();
 	}
 	
 	public void checkDimValidity(int row, int col) {
@@ -103,15 +101,6 @@ public class GameModel {
 		this.playerRoster = playerRoster;
 	}
 	
-	
-	public Player getPlayers() {
-		return players;
-	}
-
-	public void setPlayers(Player players) {
-		this.players = players;
-	}
-
 	public String getPlayerStats(String player) {
 		StringBuilder sb = new StringBuilder("");
 		sb.append(player).append("\n\n\n");
@@ -356,7 +345,7 @@ public class GameModel {
 		}
 	}
 	/////////////////////////////Bad AI VS Bad AI///////////////////////////////////
-	if((gc.getView().getLeftPanel().getSelectPlayerBtn().equals("MrBean") && gc.getView().getRightPanel().getSelectPlayerBtn().equals("MrBean"))) {
+	if((gc.getView().getLeftPanel().getSelectPlayerBtn().equals("Bad AI") && gc.getView().getRightPanel().getSelectPlayerBtn().equals("Bad AI"))) {
 		
 		boolean stop = true;
 		while (stop) {

@@ -75,7 +75,7 @@ public class PlayerPanel extends GamePanel{
 	}
 
 	public void changePlayer() {
-		String[] allPlayers = gc.getModel().getPlayers().getPlayersInfo();
+		String[] allPlayers = gc.getModel().getPlayerRoster().getPlayers();
 	//	Arrays.sort(allPlayers);													//// NA TO DOUME 
 
 		String selPlayer = (String) JOptionPane.showInputDialog(this, 
@@ -90,7 +90,9 @@ public class PlayerPanel extends GamePanel{
 		
 		//Set the selected player and allow to choose two times MrBean or Hal
 		if((gc.getModel().getGamePlayers()[0] != "Hal" && gc.getModel().getGamePlayers()[1] != "Hal")) {
+			
 			if(gc.getModel().getGamePlayers()[0] != "MrBean" && gc.getModel().getGamePlayers()[1] != "MrBean") {
+				
 				if(selPlayer != null) {
 					if (selPlayer.equals(gc.getModel().getGamePlayers()[pos==0?1:0])) {
 						JOptionPane.showMessageDialog(gc.getView(), 						
@@ -99,10 +101,10 @@ public class PlayerPanel extends GamePanel{
 								JOptionPane.ERROR_MESSAGE);
 						return;
 					}
+					
 				}
 			}
 		}
-		
 		this.currentPlayer=selPlayer;			
 		gc.selectPlayer(selPlayer,pos);
 		this.plName.setText(currentPlayer);

@@ -118,6 +118,14 @@ public class PlayerPanel extends GamePanel{
 		return pos;
 	}
 
+	public String getCurrentPlayer() {
+		return currentPlayer;
+	}
+
+	public void setCurrentPlayer(String currentPlayer) {
+		this.currentPlayer = currentPlayer;
+	}
+
 	public void setPos(int pos) {
 		this.pos = pos;
 	}

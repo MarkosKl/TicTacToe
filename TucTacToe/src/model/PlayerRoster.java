@@ -46,10 +46,6 @@ public class PlayerRoster implements Serializable {
 	
 	
 	public String[] getPlayers() {
-//		String[] newPlayers = new String[numOfPlayers];
-//		for(int i=0; i<numOfPlayers-1; i++) {
-//			newPlayers[i]=this.players[i];
-//		}
 		return players;
 	}
 	

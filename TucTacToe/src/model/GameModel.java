@@ -48,11 +48,92 @@ public class GameModel {
 	public void makeMove(int row, int col) {
 		checkMoveValidity(row, col);
 		gameBoard[row][col]=getMoverMark();
-		mover=!mover;		
+		mover=!mover;
+		moves++;
+		
+		//////////////Hal/////////////////////
+		if((gc.getView().getLeftPanel().getCurrentPlayer().equals("Hal"))) {
+			
+			if(mover == true && moves <= 8) {//Thetei to sumbolo tou PerfectAI ws X giati einai sta aristera
+				this.makeAiMove();
+			}
+		}
+		
+		if((gc.getView().getRightPanel().getCurrentPlayer().equals("Hal"))) {
+			
+			if(mover == false && moves <= 8) {//Thetei to sumbolo tou PerfectAI ws O giati einai sta deksia
+				this.makeAiMove();
+			}
+		}
+		/////////////////MrBean//////////////////
+		if((gc.getView().getLeftPanel().getCurrentPlayer().equals("MrBean"))) {
+			
+			String winner = this.checkForWinner(this.getGameBoard());
+			if(mover == true && moves <= 8 && winner == "") {//Thetei to sumbolo tou BadAI ws X giati einai sta aristera kai bazoume kai to winner giati epaize mia extra kinhsh enw eixe teleiwsei to paixnidi
+				this.makeAiMove();
+			}
+		}
+		if((gc.getView().getRightPanel().getCurrentPlayer().equals("MrBean"))) {
+			
+			String winner = this.checkForWinner(this.getGameBoard());
+			if(mover == false && moves <= 8 && winner == "") {//Thetei to sumbolo tou BadAI ws O giati einai sta aristera kai bazoume kai to winner giati epaize mia extra kinhsh enw eixe teleiwsei to paixnidi
+				this.makeAiMove();
+			}
+		}
+		
+		this.lastCheck();
+		gc.enableDone();
+		gc.showWinner();
+	}
+	
+	public void makeAiMove() {
+		///////////////////perfect AI////////////////
+		if((gc.getView().getRightPanel().getCurrentPlayer().equals("Hal"))) {//Briskei thn kaluterh pithanh kinhsh kai thn topothetei sto gameBoard me to swsto sumbolo
+			MoveO bestMoveAi = new MoveO();
+			bestMoveAi = HalO.findBestMoveO(gameBoard);
+			
+			gameBoard[bestMoveAi.rowO][bestMoveAi.colO] = 'O';
+		}
+		
+		if((gc.getView().getLeftPanel().getCurrentPlayer().equals("Hal"))) {//Briskei thn kaluterh pithanh kinhsh kai thn topothetei sto gameBoard me to swsto sumbolo
+			MoveX bestMoveAi = new MoveX();
+			bestMoveAi = HalX.findBestMoveX(gameBoard);
+			
+			gameBoard[bestMoveAi.rowX][bestMoveAi.colX] = 'X';
+		}
+		/////////////////random AI//////////////////
+		if((gc.getView().getLeftPanel().getCurrentPlayer().equals("MrBean"))) {//Briskei tuxaia kinhsh kai thn topothetei sto gameBoard me to swsto sumbolo
+			MoveRX randomMoveAi = new MoveRX();
+			randomMoveAi = MrBeanX.generateRandomMoveRX(gameBoard);
+			
+			gameBoard[randomMoveAi.rowRX][randomMoveAi.colRX] = 'X';
+		}
+		
+		if((gc.getView().getRightPanel().getCurrentPlayer().equals("MrBean"))) {//Briskei tuxaia kinhsh kai thn topothetei sto gameBoard me to swsto sumbolo
+			MoveRO randomMoveAi = new MoveRO();
+			randomMoveAi = MrBeanO.generateRandomMoveRO(gameBoard);
+			
+			gameBoard[randomMoveAi.rowRO][randomMoveAi.colRO] = 'O';
+		}
+		
+		mover=!mover;
+		moves++;
+	}
+	
+	public void selectPerfectAi() {
+		this.makeAiMove();
+	}
+	
+	public void selectRandomAi() {
+		this.makeAiMove();
+	}
+	
+	public void checkForAi() {
+		this.setMover(true);
 	}
 	
 	public char getMoverMark() {
-		return mover? 'X': 'O';
+		return mover? 'X' : 'O';
 	}
 	
 	public void selectPlayer(String player, int pos) {
@@ -216,7 +297,7 @@ public class GameModel {
 	/*---------------------------------------------THELOUN STROSIMO--------------------------------------------------------------------*/
 	
 	
-	@SuppressWarnings("unlikely-arg-type")
+	
 	public void BothAiPlaying(){//Elegxoume poia AI paizoun metaju tous kai ta bazoume na kanoune kinhseis mexri na breuei nikhths h isopalia
 		//////////////////////////////Hal VS MrBean//////////////////////////
 		if((gc.getView().getLeftPanel().getSelectPlayerBtn().equals("Hal") && gc.getView().getRightPanel().getSelectPlayerBtn().equals("MrBean"))){

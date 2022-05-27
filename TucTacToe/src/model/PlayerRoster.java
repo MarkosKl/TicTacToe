@@ -20,7 +20,7 @@ public class PlayerRoster implements Serializable {
 		players[2]="Yannis";
 		players[3]="Eleni";
 		players[4] = "Hal";
-		players[5] = "Mr. Bean";
+		players[5] = "MrBean";
 		this.numOfPlayers=6;
 	}
 	

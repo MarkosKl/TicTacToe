@@ -47,17 +47,17 @@ public class BoardCell extends GamePanel implements MouseListener {
 	protected void paintComponent(Graphics g) {
 		super.paintComponent(g);
 		//this.setBorder(new LineBorder(Color.DARK_GRAY, 1));
-		String mark = getModel().getBoardMark(this.row, this.col);
+		char mark = getModel().getBoardMark(this.row, this.col);
 		Graphics2D g2d = (Graphics2D) g;
 		int size = this.getSize().width - 2 * CELL_PADDING;
 		g2d.setStroke(new BasicStroke(6));
-		if (mark == null) {
+		if (mark == '\0') {
 			if (highlighted) {
 				g2d.setColor(Color.LIGHT_GRAY);
 				g2d.fillRect(CELL_PADDING, CELL_PADDING, size, size);
 			}
 			return;
-		} else if (mark.equals("X")) {
+		} else if (mark == '\0') {
 			g2d.drawLine(CELL_PADDING, CELL_PADDING, CELL_PADDING + size, CELL_PADDING + size);
 			g2d.drawLine(CELL_PADDING + size, CELL_PADDING, CELL_PADDING, CELL_PADDING + size);
 		} else {

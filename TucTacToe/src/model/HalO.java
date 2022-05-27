@@ -11,20 +11,20 @@ public HalO() {
 	    int rowO, colO;
 	};
 	 
-	static String playerO = "X", opponentO = "O";
+	static char playerO = 'X', opponentO = 'O';
 	
 	//Checks for empty cells
-	 static Boolean isMovesLeftO(String board[][])
+	 static Boolean isMovesLeftO(char[][] board)
 	{
 		
 	    for (int i = 0; i < 3; i++)
 	        for (int j = 0; j < 3; j++)
-	            if (board[i][j] == "\0")
+	            if (board[i][j] == '\0')
 	                return true;
 	    return false;
 	}
 	 
-	 static int evaluateO(String b[][])
+	 static int evaluateO(char b[][])
 	{
 	    // Checks for horizontal win
 	    for (int rowO = 0; rowO < 3; rowO++)
@@ -76,7 +76,7 @@ public HalO() {
 	}
 	 
 	//Checks for every possible outcome of the game and returns the value of GameBoard
-	 static int minimaxO(String[][] board,
+	 static int minimaxO(char[][] board,
 	                    int depth, Boolean isMax)
 	{
 	    int score = evaluateO(board);
@@ -101,7 +101,7 @@ public HalO() {
 	            for (int j = 0; j < 3; j++)
 	            {
 	            	
-	                if (board[i][j]=="\0")
+	                if (board[i][j]=='\0')
 	                {
 	                    
 	                    board[i][j] = opponentO;
@@ -111,7 +111,7 @@ public HalO() {
 	                                    depth + 1, !isMax));
 	 
 	                    //Empty the cells
-	                    board[i][j] = "\0";
+	                    board[i][j] = '\0';
 	                }
 	            }
 	        }
@@ -129,7 +129,7 @@ public HalO() {
 	            for (int j = 0; j < 3; j++)
 	            {
 	                
-	                if (board[i][j] == "\0")
+	                if (board[i][j] =='\0')
 	                {
 	                    
 	                    board[i][j] = playerO;
@@ -139,7 +139,7 @@ public HalO() {
 	                                    depth + 1, !isMax));
 	 
 	                    
-	                    board[i][j] = "\0";
+	                    board[i][j] = '\0';
 	                }
 	            }
 	        }
@@ -149,7 +149,7 @@ public HalO() {
 	 
 	
 	//Returns the best possible move
-	 static MoveO findBestMoveO(String board[][])
+	 static MoveO findBestMoveO(char board[][])
 	{
 	    int bestVal = -100;
 	    MoveO bestMoveO = new MoveO();
@@ -162,7 +162,7 @@ public HalO() {
 	        for (int j = 0; j < 3; j++)
 	        {
 	            
-	            if (board[i][j] == "\0")
+	            if (board[i][j] == '\0')
 	            {
 	                
 	                board[i][j] = opponentO;
@@ -171,7 +171,7 @@ public HalO() {
 	                int moveVal = minimaxO(board, 0, false);
 	 
 	                
-	                board[i][j] = "\0";
+	                board[i][j] = '\0';
 	 
 	                //Compare the moves and chooses the best
 	                if (moveVal > bestVal)

@@ -18,7 +18,7 @@ public class Player extends PlayerRoster{
 		this.score=score;
 	}
 	
-	public Player(int numOfGames) {
+	public Player(int numOfGames, int win, int tie, int lose) {
 		this.win=win;
 		this.tie=tie;
 		this.lose=lose;

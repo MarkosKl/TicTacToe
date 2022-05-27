@@ -12,7 +12,7 @@ import model.MrBeanX.MoveRX;
 public class GameModel {
 	PlayerRoster  playerRoster;
 	String [] gamePlayers;
-	String[][] gameBoard;
+	char[][] gameBoard;
 	GameController gc;
 	Boolean mover;
 	int moves;
@@ -35,12 +35,12 @@ public class GameModel {
 	
 	public void checkMoveValidity(int row, int col) {
 		checkDimValidity(row, col);
-		if (gameBoard[row][col]!=null) {
+		if (gameBoard[row][col]!='\0') {
 			throw new IllegalArgumentException("Non playable cell");
 		}
 	}
 	
-	public String getBoardMark(int row, int col) {
+	public char getBoardMark(int row, int col) {
 		checkDimValidity(row, col);
 		return gameBoard[row][col];
 	}
@@ -51,8 +51,8 @@ public class GameModel {
 		mover=!mover;		
 	}
 	
-	public String getMoverMark() {
-		return mover? "X": "O";
+	public char getMoverMark() {
+		return mover? 'X': 'O';
 	}
 	
 	public void selectPlayer(String player, int pos) {
@@ -69,12 +69,12 @@ public class GameModel {
 	}
 		
 	public void startGame() {
-		gameBoard= new String[3][3];
+		gameBoard= new char[3][3];
 	}
 	
 	public boolean inPlay() {
 		String winner = checkForWinner(gameBoard); 
-		return gameBoard !=null && moves <9 && winner == "";
+		return gameBoard!=null && moves <9 && winner == "";
 	}
 	
 	public boolean NoPlay() {
@@ -85,11 +85,11 @@ public class GameModel {
 		return gamePlayers;
 	}
 
-	public String[][] getGameBoard() {
+	public char[][] getGameBoard() {
 		return gameBoard;
 	}
 
-	public void setGameBoard(String[][] gameBoard) {
+	public void setGameBoard(char[][] gameBoard) {
 		this.gameBoard = gameBoard;
 	}
 
@@ -117,57 +117,53 @@ public class GameModel {
 		moves++;
 	}
 	
-	public String checkForWinner(String[][] gameBoard) {
+	public String checkForWinner(char[][] gameBoard) {
 		int i=0;
 	
-		/*check the rows*/
-		for(int j=0; j<3; j++) {
-			if (gameBoard[j][i] == "X" && gameBoard[j][i+1]=="X" && gameBoard[j][i+2]=="X") {
-				return "X wins";
-			}
+		for (int j = 0; j <= 2; j++) {
+		if (gameBoard[j][i] == 'X' && gameBoard[j][i+1] == 'X' && gameBoard[j][i+2] == 'X') {
+		return "X wins";
 		}
-		
-		for(int j=0; j<3; j++) {
-			if (gameBoard[j][i] == "O" && gameBoard[j][i+1]=="O" && gameBoard[j][i+2]=="O") {
-				return "O wins";
-			}
 		}
-		
-		/*check the columns*/
-		
-		for(int j=0; j<3; j++) {
-			if(gameBoard[i][j]=="X" && gameBoard[i+1][j]=="X" && gameBoard[i+2][j]=="X") {
-				return "X wins";
-			}
+
+		for (int j = 0; j <= 2; j++) {
+		if (gameBoard[j][i] == 'O' && gameBoard[j][i+1] == 'O' && gameBoard[j][i+2] == 'O') {
+		return "O wins";
 		}
-		
-		for(int j=0; j<3; j++) {
-			if(gameBoard[i][j]=="O" && gameBoard[i+1][j]=="O" && gameBoard[i+2][j]=="O") {
-				return "O wins";
-			}
 		}
-		
-		/*check the diagonals*/
-		
-		if(gameBoard[0][0]=="X" && gameBoard[1][1]=="X" && gameBoard[2][2]=="X") {
-			return "X wins";
+		//check columns
+		for (int j = 0; j <= 2; j++) {
+		if (gameBoard[i][j] == 'X' && gameBoard[i+1][j] == 'X' && gameBoard[i+2][j] == 'X') {
+		return "X wins";
 		}
-		
-		else if(gameBoard[0][0]=="O" && gameBoard[1][1]=="O" && gameBoard[2][2]=="O") {
-			return "O wins";
 		}
-		
-		else if(gameBoard[0][2]=="X" && gameBoard[1][1]=="X" && gameBoard[2][0]=="X") {
-			return "X wins";
+
+		for (int j = 0; j <= 2; j++) {
+		if (gameBoard[i][j] == 'O' && gameBoard[i+1][j] == 'O' && gameBoard[i+2][j] == 'O') {
+		return "O wins";
 		}
-		
-		else if(gameBoard[0][2]=="O" && gameBoard[1][1]=="O" && gameBoard[2][0]=="O") {
-			return "O wins";
+		}
+
+		//check diagonals
+		if (gameBoard[0][0] == 'X' && gameBoard[1][1] == 'X' && gameBoard[2][2] == 'X') {
+		return "X wins";
+		}
+
+		else if (gameBoard[0][0] == 'O' && gameBoard[1][1]  == 'O' && gameBoard[2][2] == 'O') {
+		return "O wins";
+		}
+
+		else if (gameBoard[0][2] == 'X' && gameBoard[1][1] == 'X' && gameBoard[2][0] == 'X') {
+		return "X wins";
+		}
+
+		else if (gameBoard[0][2] == 'O' && gameBoard[1][1] == 'O' && gameBoard[2][0] == 'O') {
+		return "O wins";
 		}
 		return "";
-	}
+		}
 	
-	public String checkForTie(String[][] gameBoard) {
+	public String checkForTie(char[][] gameBoard) {
 		String winner = checkForWinner(gameBoard);
 		
 				if(winner == "" && moves == 9) {
@@ -190,11 +186,11 @@ public class GameModel {
 		}
 	}
 	
-	public void emptyBoard(String[][] gameBoard) {
+	public void emptyBoard(char[][] gameBoard) {
 		moves = 0;
 		for(int i = 0; i < 3; i++) {
 			for(int j = 0; j < 3; j++) {
-				gameBoard[i][j] = "\0";
+				gameBoard[i][j] = '\0';
 			}
 		}
 	}
@@ -220,8 +216,9 @@ public class GameModel {
 	/*---------------------------------------------THELOUN STROSIMO--------------------------------------------------------------------*/
 	
 	
+	@SuppressWarnings("unlikely-arg-type")
 	public void BothAiPlaying(){//Elegxoume poia AI paizoun metaju tous kai ta bazoume na kanoune kinhseis mexri na breuei nikhths h isopalia
-		//////////////////////////////Perfect AI VS Bad AI//////////////////////////
+		//////////////////////////////Hal VS MrBean//////////////////////////
 		if((gc.getView().getLeftPanel().getSelectPlayerBtn().equals("Hal") && gc.getView().getRightPanel().getSelectPlayerBtn().equals("MrBean"))){
 			
 			boolean stop = true;
@@ -230,7 +227,7 @@ public class GameModel {
 					
 					MoveX bestMoveAi = new MoveX();
 					bestMoveAi = HalX.findBestMoveX(gameBoard);
-					gameBoard[bestMoveAi.rowX][bestMoveAi.colX] = "X";
+					gameBoard[bestMoveAi.rowX][bestMoveAi.colX] = 'X';
 					moves++;
 					mover=!mover;
 					
@@ -245,7 +242,7 @@ public class GameModel {
 					
 					MoveRO randomMoveAi = new MoveRO();
 					randomMoveAi = MrBeanO.generateRandomMoveRO(gameBoard);
-					gameBoard[randomMoveAi.rowRO][randomMoveAi.colRO] = "O";
+					gameBoard[randomMoveAi.rowRO][randomMoveAi.colRO] = 'O';
 					moves++;
 					mover=!mover;
 					
@@ -257,11 +254,9 @@ public class GameModel {
 					String tie1 = this.checkForTie(this.getGameBoard());
 					if(winner1 != "" || tie1 != "") {
 						break;
+						}
 					}
 				}
-				
-				}
-				
 		}
 	if((gc.getView().getLeftPanel().getSelectPlayerBtn().equals("MrBean") && gc.getView().getRightPanel().getSelectPlayerBtn().equals("Hal"))) {
 		
@@ -272,7 +267,7 @@ public class GameModel {
 			
 			MoveRX randomMoveAi = new MoveRX();
 			randomMoveAi = MrBeanX.generateRandomMoveRX(gameBoard);
-			gameBoard[randomMoveAi.rowRX][randomMoveAi.colRX] = "X";
+			gameBoard[randomMoveAi.rowRX][randomMoveAi.colRX] = 'X';
 			moves++;
 			mover=!mover;
 			
@@ -287,7 +282,7 @@ public class GameModel {
 			
 			MoveO perfectMoveAi = new MoveO();
 			perfectMoveAi = HalO.findBestMoveO(gameBoard);
-			gameBoard[perfectMoveAi.rowO][perfectMoveAi.colO] = "O";
+			gameBoard[perfectMoveAi.rowO][perfectMoveAi.colO] = 'O';
 			moves++;
 			mover=!mover;
 			
@@ -303,7 +298,7 @@ public class GameModel {
 		
 		}
 	}
-	/////////////////////////////////////////Perfect AI VS Perfect AI///////////////////////////
+	/////////////////////////////////////////Hal VS Hal///////////////////////////
 	if((gc.getView().getLeftPanel().getSelectPlayerBtn().equals("Hal") && gc.getView().getRightPanel().getSelectPlayerBtn().equals("Hal"))) {
 		
 		boolean stop = true;
@@ -313,7 +308,7 @@ public class GameModel {
 			
 			MoveX bestMoveAi = new MoveX();
 			bestMoveAi = HalX.findBestMoveX(gameBoard);
-			gameBoard[bestMoveAi.rowX][bestMoveAi.colX] = "X";
+			gameBoard[bestMoveAi.rowX][bestMoveAi.colX] = 'X';
 			moves++;
 			mover=!mover;
 			
@@ -328,7 +323,7 @@ public class GameModel {
 			
 			MoveO perfectMoveAi = new MoveO();
 			perfectMoveAi = HalO.findBestMoveO(gameBoard);
-			gameBoard[perfectMoveAi.rowO][perfectMoveAi.colO] = "O";
+			gameBoard[perfectMoveAi.rowO][perfectMoveAi.colO] = 'O';
 			moves++;
 			mover=!mover;
 			
@@ -341,11 +336,10 @@ public class GameModel {
 				break;
 			}
 		}
-		
 		}
 	}
-	/////////////////////////////Bad AI VS Bad AI///////////////////////////////////
-	if((gc.getView().getLeftPanel().getSelectPlayerBtn().equals("Bad AI") && gc.getView().getRightPanel().getSelectPlayerBtn().equals("Bad AI"))) {
+	/////////////////////////////MrBean VS MrBean///////////////////////////////////
+	if((gc.getView().getLeftPanel().getSelectPlayerBtn().equals("MrBean") && gc.getView().getRightPanel().getSelectPlayerBtn().equals("MrBean"))) {
 		
 		boolean stop = true;
 		while (stop) {
@@ -354,7 +348,7 @@ public class GameModel {
 			
 			MoveRX randomMoveAi = new MoveRX();
 			randomMoveAi = MrBeanX.generateRandomMoveRX(gameBoard);
-			gameBoard[randomMoveAi.rowRX][randomMoveAi.colRX] = "X";
+			gameBoard[randomMoveAi.rowRX][randomMoveAi.colRX] = 'X';
 			moves++;
 			mover=!mover;
 			
@@ -369,7 +363,7 @@ public class GameModel {
 			
 			MoveRO randomMoveAi1 = new MoveRO();
 			randomMoveAi1 = MrBeanO.generateRandomMoveRO(gameBoard);
-			gameBoard[randomMoveAi1.rowRO][randomMoveAi1.colRO] = "O";
+			gameBoard[randomMoveAi1.rowRO][randomMoveAi1.colRO] = 'O';
 			moves++;
 			mover=!mover;
 			

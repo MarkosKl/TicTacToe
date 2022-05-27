@@ -7,13 +7,14 @@ public class HalX{
 	static class MoveX{
 		int rowX, colX;
 	}
-	static String playerX = "X", opponentX ="O";
 	
-	static Boolean isMovesLeftX(String board[][]) {
+	static char opponentX ='O',  playerX = 'X';
+	
+	static Boolean isMovesLeftX(char[][] board) {
 		
 		for(int i=0; i<3; i++) {
 			for(int j=0; j<3; j++) {
-				if(board[i][j]=="\0") {
+				if(board[i][j]=='\0') {
 					return true;
 				}
 			}
@@ -21,7 +22,7 @@ public class HalX{
 		return false;
 	}
 	
-	static int evaluateX(String b[][]) {
+	static int evaluateX(char b[][]) {
 		
 		for(int rowX=0; rowX<3; rowX++) {
 			if (b[rowX][0] == b[rowX][1] &&
@@ -70,7 +71,7 @@ public class HalX{
 		}
 		 
 		
-		 static int minimaxX(String board[][],
+		 static int minimaxX(char board[][],
 		                    int depth, Boolean isMax)
 		{
 		    int score = evaluateX(board);
@@ -94,14 +95,14 @@ public class HalX{
 		        {
 		            for (int j = 0; j < 3; j++)
 		            {
-		                if (board[i][j]=="\0")
+		                if (board[i][j]=='\0')
 		                {
 		                    board[i][j] = playerX;
 		 
 		                    best = Math.max(best, minimaxX(board,
 		                                    depth + 1, !isMax));
 		 
-		                    board[i][j] = "\0";
+		                    board[i][j] ='\0';
 		                }
 		            }
 		        }
@@ -116,14 +117,14 @@ public class HalX{
 		        {
 		            for (int j = 0; j < 3; j++)
 		            {
-		                if (board[i][j] == "\0")
+		                if (board[i][j] == '\0')
 		                {
 		                    board[i][j] = opponentX;
 		 
 		                    best = Math.min(best, minimaxX(board,
 		                                    depth + 1, !isMax));
 		 
-		                    board[i][j] ="\0";
+		                    board[i][j] ='\0';
 		                }
 		            }
 		        }
@@ -131,7 +132,7 @@ public class HalX{
 		    }
 		}
 		 
-		 static MoveX findBestMoveX(String board[][])
+		 static MoveX findBestMoveX(char[][] gameBoard)
 		{
 		    int bestVal = -100;
 		    MoveX bestMoveX = new MoveX();
@@ -143,13 +144,13 @@ public class HalX{
 		        for (int j = 0; j < 3; j++)
 		        {
 		           
-		            if (board[i][j] == "\0")
+		            if (gameBoard[i][j] == '\0')
 		            {
-		                board[i][j] = playerX;
+		                gameBoard[i][j] = playerX;
 		 
-		                int moveVal = minimaxX(board, 0, false);
+		                int moveVal = minimaxX(gameBoard, 0, false);
 		 
-		                board[i][j] = "\0";
+		                gameBoard[i][j] = '\0';
 		 
 		                if (moveVal > bestVal)
 		                {

@@ -62,9 +62,19 @@ public class GameController extends WindowAdapter {
 	}
 	
 	public void startGame() {
-		this.model.setGameBoard(new String[3][3]);
+		this.model.setGameBoard(new char[3][3]);
 		this.view.getTopPanel().getStartBtn().setEnabled(false);
 		this.view.getMainPanel().showCard(MainAreaPanel.BOARD);
+		if(this.view.getLeftPanel().getCurrentPlayer().equals("Perfect AI") && this.view.getRightPanel().getCurrentPlayer() != "Perfect AI") {//vlepei an o PerfectAI einai aristera etsi wste na paiksei prwtos
+			this.model.select();
+		}
+		if(this.view.getLeftPanel().getCurrentPlayer().equals("Bad AI") && this.view.getRightPanel().getCurrentPlayer() != "Bad AI") {//vlepei an o BadAI einai aristera etsi wste na paiksei prwtos
+			this.model.selectRandomAi();
+		}
+		this.view.getLeftPanel().getSelectPlayerBtn().setEnabled(model.NoPlay());
+		this.view.getRightPanel().getSelectPlayerBtn().setEnabled(model.NoPlay());
+		this.view.getTopPanel().getAddPlayerBtn().setEnabled(model.NoPlay());
+		this.model.BothAiPlaying();
 		this.view.getLeftPanel().getSelectPlayerBtn().setEnabled(model.NoPlay());
 		this.view.getRightPanel().getSelectPlayerBtn().setEnabled(model.NoPlay());
 	}

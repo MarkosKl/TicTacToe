@@ -19,17 +19,17 @@ public class MrBeanX {
 	static char playerRX = 'X', opponentRX = 'O';
 	
 	//Checks if the GameBoard is full
-	static Boolean isMovesLeftRX(String board[][])
+	static Boolean isMovesLeftRX(char board[][])
 	{
 	    for (int i = 0; i < 3; i++)
 	        for (int j = 0; j < 3; j++)
-	            if (board[i][j] == "\0")
+	            if (board[i][j] == '\0')
 	                return true;
 	    return false;
 	}
 	
 	//Generates random moves
-	static MoveRX generateRandomMoveRX(String board[][]) {
+	static MoveRX generateRandomMoveRX(char board[][]) {
 		
 		Boolean movesLeft = isMovesLeftRX(board);
 		Random rand = new Random();
@@ -48,7 +48,7 @@ public class MrBeanX {
 		}
         
       //Makes moves since checking for previous full cells
-        while(board[randomMoveRX.rowRX][randomMoveRX.colRX] != "\0") {
+        while(board[randomMoveRX.rowRX][randomMoveRX.colRX] != '\0') {
         	numberRowRX = rand.nextInt(3);
     		numberColRX = rand.nextInt(3);
         	randomMoveRX.rowRX = numberRowRX;

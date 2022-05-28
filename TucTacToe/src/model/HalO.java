@@ -151,7 +151,7 @@ public HalO() {
 	//Returns the best possible move
 	 static MoveO findBestMoveO(char board[][])
 	{
-	    int bestVal = -100;
+	    int bestVal = -1000;
 	    MoveO bestMoveO = new MoveO();
 	    bestMoveO.rowO = -1;
 	    bestMoveO.colO = -1;
@@ -183,7 +183,6 @@ public HalO() {
 	            }
 	        }
 	    }
-	 
 	 
 	    return bestMoveO;
 	}

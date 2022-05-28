@@ -42,6 +42,7 @@ public class BoardCell extends GamePanel implements MouseListener {
 		this.highlighted=false;
 		repaint();
 	}
+	
 
 	@Override
 	protected void paintComponent(Graphics g) {
@@ -57,7 +58,7 @@ public class BoardCell extends GamePanel implements MouseListener {
 				g2d.fillRect(CELL_PADDING, CELL_PADDING, size, size);
 			}
 			return;
-		} else if (mark == '\0') {
+		} else if (mark == 'X') {
 			g2d.drawLine(CELL_PADDING, CELL_PADDING, CELL_PADDING + size, CELL_PADDING + size);
 			g2d.drawLine(CELL_PADDING + size, CELL_PADDING, CELL_PADDING, CELL_PADDING + size);
 		} else {

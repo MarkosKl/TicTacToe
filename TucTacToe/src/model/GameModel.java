@@ -87,7 +87,7 @@ public class GameModel {
 	}
 	
 	public void makeAiMove() {
-		///////////////////perfect AI////////////////
+		///////////////////Hal////////////////
 		if((gc.getView().getRightPanel().getCurrentPlayer().equals("Hal"))) {//Briskei thn kaluterh pithanh kinhsh kai thn topothetei sto gameBoard me to swsto sumbolo
 			MoveO bestMoveAi = new MoveO();
 			bestMoveAi = HalO.findBestMoveO(gameBoard);
@@ -101,7 +101,7 @@ public class GameModel {
 			
 			gameBoard[bestMoveAi.rowX][bestMoveAi.colX] = 'X';
 		}
-		/////////////////random AI//////////////////
+		/////////////////MrBean//////////////////
 		if((gc.getView().getLeftPanel().getCurrentPlayer().equals("MrBean"))) {//Briskei tuxaia kinhsh kai thn topothetei sto gameBoard me to swsto sumbolo
 			MoveRX randomMoveAi = new MoveRX();
 			randomMoveAi = MrBeanX.generateRandomMoveRX(gameBoard);
@@ -250,8 +250,7 @@ public class GameModel {
 				if(winner == "" && moves == 9) {
 					return "TIE";
 				
-			
-}
+				}
 		return "";
 	}
 	
@@ -295,6 +294,7 @@ public class GameModel {
 	
 	
 	/*---------------------------------------------THELOUN STROSIMO--------------------------------------------------------------------*/
+	
 	
 	
 	

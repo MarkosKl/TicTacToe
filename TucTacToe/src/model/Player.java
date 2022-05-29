@@ -1,6 +1,6 @@
 package model;
 
-public class Player extends PlayerRoster{
+public class Player{
 
 	private static final long serialVersionUID = 1L;
 	protected int best5Games[],recent5Games[];
@@ -8,13 +8,11 @@ public class Player extends PlayerRoster{
 	protected double winPercentage,losePercentage,score;
 	protected String best10Players[];
 	
-	public Player() {
-		this.best10Players=best10Players;
+	public Player(int best5Games[], int recent5Games[], int numOfGames, int score) {
+		
 		this.best5Games=best5Games;
 		this.recent5Games=recent5Games;
 		this.numOfGames=numOfGames;
-		this.winPercentage=winPercentage;
-		this.losePercentage=losePercentage;
 		this.score=score;
 	}
 	

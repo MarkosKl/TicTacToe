@@ -35,10 +35,10 @@ public class PlayerPanel extends GamePanel{
 		this.pos=pos;		
 		this.setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
 		this.setPreferredSize(new Dimension(MainWindow.PLAYER_WIDTH, MainWindow.HEIGHT-MainWindow.TOP_HEIGHT));
-		this.setBorder(new LineBorder(Color.GRAY,1,true));
+		this.setBorder(new LineBorder(Color.RED,1,true));
 		this.setAlignmentX(CENTER_ALIGNMENT);
 		
-		this.setBackground(Color.WHITE);
+		this.setBackground(Color.GREEN);
 		
 		
 		selectPlayerBtn = new JButton("Choose Player");
@@ -117,19 +117,11 @@ public class PlayerPanel extends GamePanel{
 	public int getPos() {
 		return pos;
 	}
-
-	public String getCurrentPlayer() {
-		return currentPlayer;
-	}
-
-	public void setCurrentPlayer(String currentPlayer) {
-		this.currentPlayer = currentPlayer;
-	}
-
+	
 	public void setPos(int pos) {
 		this.pos = pos;
 	}
-
+	
 	public JTextField getPlName() {
 		return plName;
 	}
@@ -144,5 +136,17 @@ public class PlayerPanel extends GamePanel{
 
 	public JButton getSelectPlayerBtn() {
 		return selectPlayerBtn;
-	}	
+	}
+
+	public String getCurrentPlayer() {
+		return currentPlayer;
+	}
+
+	public void setCurrentPlayer(String currentPlayer) {
+		this.currentPlayer = currentPlayer;
+	}
+
+
+
+	
 }

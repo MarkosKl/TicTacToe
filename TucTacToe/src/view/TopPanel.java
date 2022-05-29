@@ -47,11 +47,11 @@ public class TopPanel extends GamePanel{
 		doneBtn.addActionListener((e)->{gc.getView().getRightPanel().getSelectPlayerBtn().setEnabled(true);});
 		doneBtn.addActionListener((e)->{this.getAddPlayerBtn().setEnabled(true);});
 
-		
+		/* When pressed AddPlayer is called */
 		addPlayerBtn = new JButton("Add Player");
 		addPlayerBtn.setPreferredSize(new Dimension(100, 40));		
 		addPlayerBtn.setEnabled(true);
-		addPlayerBtn.addActionListener((e)->{gc.getModel().getPlayerRoster().addPlayer();});//Kaleitai h addPlayer otan paththei
+		addPlayerBtn.addActionListener((e)->{gc.getModel().getPlayerRoster().addPlayer();});
 		
 		add(startGameBtn);
 		add(doneBtn);

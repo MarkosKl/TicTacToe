@@ -7,16 +7,17 @@ import org.junit.jupiter.api.Test;
 import control.GameController;
 import model.GameModel;
 
-class CheckForTie {
-
+class CheckForTieTest {
+/* Doesn't work since the parameter moves must be an argument but we can't figure the way to make it possible */
 	@Test
 	void test1() {
+		int moves = 0;
 		var gc = new GameController();
-		char[][] gameBoard = {{'X', 'O', 'X'}, {'X', 'O', 'O'}, {'O', 'X', 'X'}};		
+		char gameBoard[][] = {{'X', 'O', 'X'}, 
+							  {'X', 'O', 'O'}, 
+							  {'O', 'X', 'X'}};		
 		var model = new GameModel(gc);
 		String output = model.checkForTie(gameBoard);
 		assertEquals("TIE", output);
 	}
-
-
 }

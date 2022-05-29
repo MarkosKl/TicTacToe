@@ -6,7 +6,7 @@ import javax.swing.JOptionPane;
 
 import control.GameController;
 
-public class PlayerRoster implements Serializable {
+public class PlayerRoster implements Serializable{
 
 	private static final long serialVersionUID = 1L;
 	private String[] players;
@@ -24,6 +24,16 @@ public class PlayerRoster implements Serializable {
 		this.numOfPlayers=6;
 	}
 	
+	public String getPlayer(int i) {
+		if (i<0 || i>players.length) {
+			return null;
+		}
+		return players[i];
+	}
+	
+	public String[] getPlayers() {
+		return players;
+	}
 	
 	public int getNumOfPlayers() {
 		return numOfPlayers;
@@ -36,34 +46,13 @@ public class PlayerRoster implements Serializable {
 	}
 
 
-
-	public String getPlayer(int i) {
-		if (i<0 || i>players.length) {
-			return null;
-		}
-		return players[i];
-	}
-	
-	
-	public String[] getPlayers() {
-		return players;
-	}
-	
 	public void setPlayerString(String s) {
 		int counter = this.countArrayElements(getPlayers());
 		this.players[counter] = players[counter];
 	}
 
 
-	/*Checks if the array is empty and returns the first empty slot or returns -1 if the array is full */
-	public int countArrayElements(String[] players) {
-		for(int i=0; i<=players.length; i++) {
-			if(players[i]==null) {
-				return i;
-			}
-		}
-		return -1;
-	}
+
 	
 	public int addPlayer() {
 		String playerName;
@@ -102,5 +91,15 @@ public class PlayerRoster implements Serializable {
 		}
 		numOfPlayers++;
 		return 3;
+	}
+	
+	/*Checks if the array is empty and returns the first empty slot or returns -1 if the array is full */
+	public int countArrayElements(String[] players) {
+		for(int i=0; i<=players.length; i++) {
+			if(players[i]==null) {
+				return i;
+			}
+		}
+		return -1;
 	}
 }

@@ -84,7 +84,7 @@ public class PlayerRoster implements Serializable{
 						JOptionPane.ERROR_MESSAGE);
 				return 1;
 			}
-			else if(players[0] != null || players[1] != null || players[2] != null || players[3] != null || players[4] != null || players[5] != null || players[6] != null || players[7] != null || players[8] != null || players[9] != null){//Ama exoume kenh thesh sto array, bazei to onoma sthn swsth thesh kathe fora
+			else if(players[0] != null || players[1] != null || players[2] != null || players[3] != null || players[4] != null || players[5] != null || players[6] != null || players[7] != null || players[8] != null || players[9] != null || players[10] != null || players[11] != null || players[12] != null || players[13] != null || players[14] != null ){
 				this.getPlayers()[counter] = playerName;
 				return 2;
 			}

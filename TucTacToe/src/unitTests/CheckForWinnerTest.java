@@ -36,4 +36,14 @@ class CheckForWinnerTest {
 		assertEquals("X wins", output);
 	}
 
+	@Test
+	void test4() {
+		var gc = new GameController();
+		char[][] gameBoard = {{'X', 'O', 'X'}, 
+							  {'X', 'O', 'O'}, 
+							  {'O', 'X', 'X'}};			
+		var model = new GameModel(gc);
+		String output = model.checkForWinner(gameBoard);
+		assertNotEquals("X wins", output);
+	}
 }

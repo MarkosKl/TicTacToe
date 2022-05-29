@@ -14,25 +14,28 @@ public class Hal {
 	
 	
 	static char playerX = 'X', playerO = 'O';
-	
+
 
 	//Checks for empty cells
-		 static Boolean checkForEmptyCells(char board[][])
+		 static int checkForEmptyCells(char board[][])
 		{
-			
+			int counter=0;
 		    for (int i=0; i<3; i++)
 		        for (int j=0; j<3; j++)
-		            if (board[i][j] == '\0')
-		                return true;
-		    return false;
+		            if (board[i][j] == '\0') {
+		            	  counter++;
+			            	return counter;
+		            }
+		    return counter;
 		}
+		 
 	
 /********************************************************FOR O ONLY********************************************************/
 	static int calculateScoreO(char board[][]) {
-			
+	
 		/* checks for horizontal win */
 		for(int i=0; i<3; i++) {
-			if(board[i][0] == board[i][1] && board[i][1] == board[i][2]) {
+			if(board[i][0] == board[i][1] || board[i][1] == board[i][2] || board[i][0] == board[i][2]) {
 				if(board[i][0] == playerX) {
 					return +10;
 				}
@@ -44,7 +47,7 @@ public class Hal {
 		
 		/* checks for vertical win */
 		for(int i=0; i<3; i++) {
-			if(board[0][i] == board[1][i] && board[1][i] == board[2][i]) {
+			if(board[0][i] == board[1][i] || board[1][i] == board[2][i] || board[0][i] == board[2][i]) {
 				if(board[0][i] == playerX) {
 					return +10;
 				}
@@ -55,7 +58,7 @@ public class Hal {
 		}
 		
 		/* checks for diagonal win */
-		if (board[0][0] == board[1][1] && board[1][1] == board[2][2])
+		if (board[0][0] == board[1][1] || board[1][1] == board[2][2] || board[0][0] == board[2][2])
 	    {
 	        if (board[0][0] == playerX)
 	            return +10;
@@ -63,7 +66,7 @@ public class Hal {
 	            return -10;
 	    }
 	 
-	    if (board[0][2] == board[1][1] && board[1][1] == board[2][0])
+	    if (board[0][2] == board[1][1] || board[1][1] == board[2][0] || board[0][2] == board[2][0])
 	    {
 	        if (board[0][2] == playerX)
 	            return +10;
@@ -79,7 +82,7 @@ public class Hal {
 
 		/* checks for horizontal win */
 		for(int i=0; i<3; i++) {
-			if(board[i][0] == board[i][1] && board[i][1] == board[i][2]) {
+			if(board[i][0] == board[i][1] || board[i][1] == board[i][2] || board[i][0] == board[i][2]) {
 				if(board[i][0] == playerO) {
 					return +10;
 				}
@@ -91,7 +94,7 @@ public class Hal {
 		
 		/* checks for vertical win */
 		for(int i=0; i<3; i++) {
-			if(board[0][i] == board[1][i] && board[1][i] == board[2][i]) {
+			if(board[0][i] == board[1][i] || board[1][i] == board[2][i] || board[0][i] == board[2][i]) {
 				if(board[0][i] == playerO) {
 					return +10;
 				}
@@ -102,7 +105,7 @@ public class Hal {
 		}
 		
 		/* checks for diagonal win */
-		if (board[0][0] == board[1][1] && board[1][1] == board[2][2])
+		if (board[0][0] == board[1][1] || board[1][1] == board[2][2] || board[0][0] == board[2][2])
 	    {
 	        if (board[0][0] == playerO)
 	            return +10;
@@ -110,7 +113,7 @@ public class Hal {
 	            return -10;
 	    }
 	 
-	    if (board[0][2] == board[1][1] && board[1][1] == board[2][0])
+	    if (board[0][2] == board[1][1] || board[1][1] == board[2][0] || board[0][2] == board[2][0])
 	    {
 	        if (board[0][2] == playerO)
 	            return +10;
@@ -134,7 +137,7 @@ public class Hal {
 	    if (scoreO == -10)
 	        return scoreO;
 	 
-	    if (checkForEmptyCells(board) == false)
+	    if (checkForEmptyCells(board) == 0)
 	        return 0;
 	 
 	    if (isMax)
@@ -193,7 +196,7 @@ public class Hal {
 	//Returns the best possible move
 	 static Move findBestMoveO(char board[][])
 	{
-	    int bestVal = -1000;
+	    int bestVal = -100;
 	    Move bestMoveO = new Move();
 	    bestMoveO.row = -1;
 	    bestMoveO.column = -1;
@@ -243,7 +246,7 @@ public class Hal {
 		 return score;
 		
 		
-		if (checkForEmptyCells(board) == false)
+		if (checkForEmptyCells(board) == 0)
 		 return 0;
 		
 		if (isMax)
@@ -255,7 +258,7 @@ public class Hal {
 		     {
 		         if (board[i][j]=='\0')
 		         {
-		             board[i][j] = playerX;
+		             board[i][j] = playerO;
 		
 		             best = Math.max(best, minimaxX(board, depth + 1, !isMax));
 		
@@ -276,7 +279,7 @@ public class Hal {
 		     {
 		         if (board[i][j] == '\0')
 		         {
-		             board[i][j] = playerO;
+		             board[i][j] = playerX;
 		
 		             best = Math.min(best, minimaxX(board, depth + 1, !isMax));
 		
@@ -302,7 +305,7 @@ public class Hal {
 		 {
 		     if (gameBoard[i][j] == '\0')
 		     {
-		         gameBoard[i][j] = playerX;
+		         gameBoard[i][j] = playerO;
 		
 		         int moveVal = minimaxX(gameBoard, 0, false);
 		

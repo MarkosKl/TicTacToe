@@ -29,5 +29,4 @@ public class HallOfFame extends GamePanel{
 			g.drawString(gc.getModel().getPlayerRoster().getPlayer(i),xVariable,yVariable+20*i);
 		}
 	}
-
 }

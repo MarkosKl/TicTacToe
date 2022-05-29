@@ -19,6 +19,7 @@ import javax.swing.JTextField;
 import javax.swing.border.LineBorder;
 
 import control.GameController;
+import model.Player;
 
 public class PlayerPanel extends GamePanel{
 	
@@ -75,7 +76,7 @@ public class PlayerPanel extends GamePanel{
 	}
 
 	public void changePlayer() {
-		String[] allPlayers = gc.getModel().getPlayerRoster().getPlayers();
+		String[] allPlayers =gc.getModel().getPlayerRoster().getPlayers();
 	//	Arrays.sort(allPlayers);													//// NA TO DOUME 
 
 		String selPlayer = (String) JOptionPane.showInputDialog(this, 
@@ -114,12 +115,10 @@ public class PlayerPanel extends GamePanel{
 		this.repaint();
 		}	
 
+	/**********************GETTERS**********************/
+	
 	public int getPos() {
 		return pos;
-	}
-	
-	public void setPos(int pos) {
-		this.pos = pos;
 	}
 	
 	public JTextField getPlName() {
@@ -130,10 +129,6 @@ public class PlayerPanel extends GamePanel{
 		return plStats;
 	}
 	
-	public void setPlayerStats(String stats) {
-		this.plStats.setText(stats);
-	}
-
 	public JButton getSelectPlayerBtn() {
 		return selectPlayerBtn;
 	}
@@ -142,11 +137,21 @@ public class PlayerPanel extends GamePanel{
 		return currentPlayer;
 	}
 
+
+	
+	/***************************************************/
+	
+	/**********************SETTERS**********************/
+	
+	public void setPos(int pos) {
+		this.pos = pos;
+	}
+	
+	public void setPlayerStats(String stats) {
+		this.plStats.setText(stats);
+	}
+
 	public void setCurrentPlayer(String currentPlayer) {
 		this.currentPlayer = currentPlayer;
 	}
-
-
-
-	
 }

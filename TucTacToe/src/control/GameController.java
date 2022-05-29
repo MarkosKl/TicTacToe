@@ -12,6 +12,7 @@ import java.io.ObjectOutputStream;
 import javax.swing.JOptionPane;
 
 import model.GameModel;
+import model.Player;
 import model.PlayerRoster;
 import view.MainAreaPanel;
 import view.MainWindow;
@@ -42,12 +43,12 @@ public class GameController extends WindowAdapter {
 	public void quit() {		
 		System.out.println("bye bye...");
 		try {
-			ObjectOutputStream file = new ObjectOutputStream(new FileOutputStream("tuctactoe.ser"));
+			ObjectOutputStream outputStream = new ObjectOutputStream(new FileOutputStream("tuctactoe.ser"));
 			int counter = this.getModel().getPlayerRoster().countArrayElements(this.getModel().getPlayerRoster().getPlayers())+1;
 			for(int i = 0; i <= counter; i++) {
-				file.writeObject(this.getModel().getPlayerRoster().getPlayer(i));
+				outputStream.writeObject(this.getModel().getPlayerRoster().getPlayer(i));
 			}
-			file.close();
+			outputStream.close();
 		} catch (FileNotFoundException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -67,25 +68,25 @@ public class GameController extends WindowAdapter {
 	
 	/*when we start the game we retrieve the data from the saved file */
 	public void startGame() { 
-		try {
-			
-			ObjectInputStream inputStream = new ObjectInputStream(new FileInputStream("tuctactoe.ser"));
-			int index = inputStream.readInt();
-			for(int i = 0; i <= index; i++) {
-				try {
-					this.getModel().getPlayerRoster().setPlayerString((String)inputStream.readObject());
-				} catch (ClassNotFoundException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}
-			}
-		} catch (FileNotFoundException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+//		try {
+//			ObjectInputStream inputStream = new ObjectInputStream(new FileInputStream("tuctactoe.ser"));
+//			int index = inputStream.readInt();
+//			for(int i = 0; i <= index; i++) {
+//				try {
+//					this.getModel().getPlayerRoster().setPlayerString((String)inputStream.readObject());
+//				} catch (ClassNotFoundException e) {
+//					// TODO Auto-generated catch block
+//					e.printStackTrace();
+//				}
+//			}
+//			inputStream.close();
+//		} catch (FileNotFoundException e) {
+//			// TODO Auto-generated catch block
+//			e.printStackTrace();
+//		} catch (IOException e) {
+//			// TODO Auto-generated catch block
+//			e.printStackTrace();
+//		}
 		this.model.setGameBoard(new char[3][3]);
 		this.model.emptyBoard(getModel().getGameBoard());
 		this.model.emptyPlayers();
@@ -109,7 +110,7 @@ public class GameController extends WindowAdapter {
 	public void enableDone() {
 		String winner = getModel().checkForWinner(getModel().getGameBoard());
 		String tie = getModel().checkForTie(getModel().getGameBoard());
-		if((getModel().NoPlay() && winner != "") || (getModel().NoPlay() && tie != "")) {
+		if((getModel().NoPlay() && winner != " ") || (getModel().NoPlay() && tie != " ")) {
 			view.getTopPanel().getDoneBtn().setEnabled(true);
 		}
 	}
@@ -120,18 +121,18 @@ public class GameController extends WindowAdapter {
 		String tie = getModel().checkForTie(getModel().getGameBoard());
 		if(winner == "X wins") {
 			JOptionPane pane = new JOptionPane();
-			JOptionPane.showConfirmDialog(pane, "Game Over. "+ winner + "","Game over.",
+			JOptionPane.showConfirmDialog(pane, "Game Over. "+ winner + " ","Game over.",
 					JOptionPane.OK_CANCEL_OPTION);	
 		}
 		else if(winner == "O wins") {
 			JOptionPane pane1 = new JOptionPane();
-			JOptionPane.showConfirmDialog(pane1, "Game Over. "+ winner + "","Game over.",
+			JOptionPane.showConfirmDialog(pane1, "Game Over. "+ winner + " ","Game over.",
 					JOptionPane.OK_CANCEL_OPTION);
 		}
 		
 		else if(tie == "TIE") {
 			JOptionPane pane2 = new JOptionPane();
-			JOptionPane.showConfirmDialog(pane2, "Game Over. "+ tie + "","Game over.",
+			JOptionPane.showConfirmDialog(pane2, "Game Over. "+ tie + " ","Game over.",
 					JOptionPane.OK_CANCEL_OPTION);
 		}
 	}

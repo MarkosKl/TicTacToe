@@ -11,7 +11,7 @@ import model.MrBean.MoveRandomX;
 
 public class GameModel {
 	PlayerRoster  playerRoster;
-	String [] gamePlayers;
+	String[] gamePlayers;
 	char[][] gameBoard;
 	GameController gc;
 	Boolean mover;
@@ -43,7 +43,7 @@ public class GameModel {
 	
 	public boolean inPlay() {
 		String winner = checkForWinner(gameBoard); 
-		return gameBoard!=null && moves <9 && winner == "";
+		return gameBoard!=null && moves <9 && winner == " ";
 	}
 	
 	public boolean NoPlay() {
@@ -109,14 +109,14 @@ public class GameModel {
 		/********************Hal********************/
 		if((gc.getView().getLeftPanel().getCurrentPlayer().equals("Hal"))) {
 			
-			if(mover == true && moves <= 8) {//Thetei to sumbolo tou PerfectAI ws X giati einai sta aristera
+			if(mover == true && moves <= 8) {
 				this.makeAiMove();
 			}
 		}
 		
 		if((gc.getView().getRightPanel().getCurrentPlayer().equals("Hal"))) {
 			
-			if(mover == false && moves <= 8) {//Thetei to sumbolo tou PerfectAI ws O giati einai sta deksia
+			if(mover == false && moves <= 8) {
 				this.makeAiMove();
 			}
 		}
@@ -124,14 +124,14 @@ public class GameModel {
 		if((gc.getView().getLeftPanel().getCurrentPlayer().equals("MrBean"))) {
 			
 			String winner = this.checkForWinner(this.getGameBoard());
-			if(mover == true && moves <= 8 && winner == "") {//Thetei to sumbolo tou BadAI ws X giati einai sta aristera kai bazoume kai to winner giati epaize mia extra kinhsh enw eixe teleiwsei to paixnidi
+			if(mover == true && moves <= 8 && winner == " ") {
 				this.makeAiMove();
 			}
 		}
 		if((gc.getView().getRightPanel().getCurrentPlayer().equals("MrBean"))) {
 			
 			String winner = this.checkForWinner(this.getGameBoard());
-			if(mover == false && moves <= 8 && winner == "") {//Thetei to sumbolo tou BadAI ws O giati einai sta aristera kai bazoume kai to winner giati epaize mia extra kinhsh enw eixe teleiwsei to paixnidi
+			if(mover == false && moves <= 8 && winner == " ") {
 				this.makeAiMove();
 			}
 		}
@@ -143,28 +143,28 @@ public class GameModel {
 	
 	public void makeAiMove() {
 		/********************Hal********************/
-		if((gc.getView().getRightPanel().getCurrentPlayer().equals("Hal"))) {//Briskei thn kaluterh pithanh kinhsh kai thn topothetei sto gameBoard me to swsto sumbolo
+		if((gc.getView().getRightPanel().getCurrentPlayer().equals("Hal"))) {
 			Move bestMoveAi = new Move();
 			bestMoveAi = Hal.findBestMoveO(gameBoard);
 			
 			gameBoard[bestMoveAi.row][bestMoveAi.column] = 'O';
 		}
 		
-		if((gc.getView().getLeftPanel().getCurrentPlayer().equals("Hal"))) {//Briskei thn kaluterh pithanh kinhsh kai thn topothetei sto gameBoard me to swsto sumbolo
+		if((gc.getView().getLeftPanel().getCurrentPlayer().equals("Hal"))) {
 			Move bestMoveAi = new Move();
 			bestMoveAi = Hal.findBestMoveX(gameBoard);
 			
 			gameBoard[bestMoveAi.row][bestMoveAi.column] = 'X';
 		}
 		/******************MrBean******************/
-		if((gc.getView().getLeftPanel().getCurrentPlayer().equals("MrBean"))) {//Briskei tuxaia kinhsh kai thn topothetei sto gameBoard me to swsto sumbolo
+		if((gc.getView().getLeftPanel().getCurrentPlayer().equals("MrBean"))) {
 			MoveRandomX randomMoveAi = new MoveRandomX();
 			randomMoveAi = MrBean.generateRandomMoveX(gameBoard);
 			
 			gameBoard[randomMoveAi.rowsRandomX][randomMoveAi.columnsRandomX] = 'X';
 		}
 		
-		if((gc.getView().getRightPanel().getCurrentPlayer().equals("MrBean"))) {//Briskei tuxaia kinhsh kai thn topothetei sto gameBoard me to swsto sumbolo
+		if((gc.getView().getRightPanel().getCurrentPlayer().equals("MrBean"))) {
 			MoveRandomO randomMoveAi = new MoveRandomO();
 			randomMoveAi = MrBean.generateRandomMoveO(gameBoard);
 			
@@ -191,12 +191,14 @@ public class GameModel {
 		return mover? 'X' : 'O';
 	}
 	
-	public String getPlayerStats(String player) {
+	public String getPlayerStats(String pl) {
 		StringBuilder sb = new StringBuilder("");
-		sb.append(player).append("\n\n\n");
-		sb.append("Total:").append("\t").append(4).append("\n");
-		sb.append("Won:").append("\t").append("75%").append("\n");
-		sb.append("Lost:").append("\t").append("25%").append("\n");
+		sb.append(pl).append("\n\n\n");
+		sb.append("Total:").append("\t").append("4").append("\n");
+		sb.append("Won:").append("\t").append("4").append("\n");
+		sb.append("Lost:").append("\t").append("4").append("\n");
+		sb.append("WinPercentage:").append("\t").append("4").append("\n");
+		sb.append("LosePercentage:").append("\t").append("4").append("\n");
 		return sb.toString();			
 	}
 	
@@ -296,14 +298,10 @@ public class GameModel {
 	
 	
 	
-	
-	/*---------------------------------------------THELOUN STROSIMO--------------------------------------------------------------------*/
-	
-	
-	
-	public void BothAiPlaying(){//Elegxoume poia AI paizoun metaju tous kai ta bazoume na kanoune kinhseis mexri na breuei nikhths h isopalia
+	/*Check which AI are playing */
+	public void BothAiPlaying(){
 		/********************Hal VS MrBean********************/
-		if((gc.getView().getLeftPanel().getSelectPlayerBtn().equals("Hal") && gc.getView().getRightPanel().getSelectPlayerBtn().equals("MrBean"))){
+		if((gc.getView().getLeftPanel().getCurrentPlayer().equals("Hal") && gc.getView().getRightPanel().getCurrentPlayer().equals("MrBean"))){
 			
 			boolean stop = true;
 				while (stop) {
@@ -320,7 +318,7 @@ public class GameModel {
 					this.lastCheck();
 					gc.enableDone();
 					gc.showWinner();
-					if(winner != "" || tie != "") {
+					if(winner != " " || tie != " ") {
 						break;
 					}
 					
@@ -336,13 +334,13 @@ public class GameModel {
 					gc.showWinner();
 					String winner1 = this.checkForWinner(this.getGameBoard());
 					String tie1 = this.checkForTie(this.getGameBoard());
-					if(winner1 != "" || tie1 != "") {
+					if(winner1 != " " || tie1 != " ") {
 						break;
 						}
 					}
 				}
 		}
-	if((gc.getView().getLeftPanel().getSelectPlayerBtn().equals("MrBean") && gc.getView().getRightPanel().getSelectPlayerBtn().equals("Hal"))) {
+	if((gc.getView().getLeftPanel().getCurrentPlayer().equals("MrBean") && gc.getView().getRightPanel().getCurrentPlayer().equals("Hal"))) {
 		
 		boolean stop = true;
 		while (stop) {
@@ -360,7 +358,7 @@ public class GameModel {
 			this.lastCheck();
 			gc.enableDone();
 			gc.showWinner();
-			if(winner != "" || tie != "") {
+			if(winner != " " || tie != " ") {
 				break;
 			}
 			
@@ -375,7 +373,7 @@ public class GameModel {
 			gc.showWinner();
 			String winner1 = this.checkForWinner(this.getGameBoard());
 			String tie1 = this.checkForTie(this.getGameBoard());
-			if(winner1 != "" || tie1 != "") {
+			if(winner1 != " " || tie1 != " ") {
 				break;
 			}
 		}
@@ -383,7 +381,7 @@ public class GameModel {
 		}
 	}
 	/********************Hal VS Hal********************/
-	if((gc.getView().getLeftPanel().getSelectPlayerBtn().equals("Hal") && gc.getView().getRightPanel().getSelectPlayerBtn().equals("Hal"))) {
+	if((gc.getView().getLeftPanel().getCurrentPlayer().equals("Hal") && gc.getView().getRightPanel().getCurrentPlayer().equals("Hal"))) {
 		
 		boolean stop = true;
 		while (stop) {
@@ -401,7 +399,7 @@ public class GameModel {
 			this.lastCheck();
 			gc.enableDone();
 			gc.showWinner();
-			if(winner != "" || tie != "") {
+			if(winner != " " || tie != " ") {
 				break;
 			}
 			
@@ -416,14 +414,14 @@ public class GameModel {
 			gc.showWinner();
 			String winner1 = this.checkForWinner(this.getGameBoard());
 			String tie1 = this.checkForTie(this.getGameBoard());
-			if(winner1 != "" || tie1 != "") {
+			if(winner1 != " " || tie1 != " ") {
 				break;
 			}
 		}
 		}
 	}
 	/********************MrBean VS MrBean********************/
-	if((gc.getView().getLeftPanel().getSelectPlayerBtn().equals("MrBean") && gc.getView().getRightPanel().getSelectPlayerBtn().equals("MrBean"))) {
+	if((gc.getView().getLeftPanel().getCurrentPlayer().equals("MrBean") && gc.getView().getRightPanel().getCurrentPlayer().equals("MrBean"))) {
 		
 		boolean stop = true;
 		while (stop) {
@@ -441,7 +439,7 @@ public class GameModel {
 			this.lastCheck();
 			gc.enableDone();
 			gc.showWinner();
-			if(winner != "" || tie != "") {
+			if(winner != " " || tie != " ") {
 				break;
 			}
 			
@@ -456,7 +454,7 @@ public class GameModel {
 			gc.showWinner();
 			String winner1 = this.checkForWinner(this.getGameBoard());
 			String tie1 = this.checkForTie(this.getGameBoard());
-			if(winner1 != "" || tie1 != "") {
+			if(winner1 != " " || tie1 != " ") {
 				break;
 			}
 		}
